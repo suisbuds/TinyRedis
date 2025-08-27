@@ -127,7 +127,7 @@ func (h *Handler) handleDroplet(ctx context.Context, conn io.ReadWriter, droplet
 // 关闭所有TCP连接，释放资源
 func (h *Handler) Close() {
 	h.Once.Do(func() {
-		h.logger.Warnf("[handler] handler close")
+		h.logger.Infof("[handler] handler close")
 		h.close.Store(true)
 		h.mu.RLock()
 		defer h.mu.RUnlock()

@@ -111,13 +111,13 @@ func (s *Server) listenAndServe(listener net.Listener, closeChan chan struct{}) 
 			// 取消ctx，通知所有handler关闭
 			cancel()
 			s.handler.Close()
-			s.logger.Warnf("[server] server closed")
+			s.logger.Infof("[server] server closed")
 			if err := listener.Close(); err != nil {
 				s.logger.Errorf("[server] server listener close error: %s", err.Error())
 			}
 		})
 
-	s.logger.Warnf("[server] server starting")
+	s.logger.Infof("[server] server starting")
 	var wg sync.WaitGroup
 
 	// 3. io 多路复用, 不断从listener中接收连接请求
