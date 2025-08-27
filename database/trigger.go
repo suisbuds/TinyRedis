@@ -3,6 +3,7 @@ package database
 import (
 	"context"
 	"fmt"
+	"strings"
 	"sync"
 
 	"github.com/suisbuds/TinyRedis/handler"
@@ -22,7 +23,8 @@ func (d *DBTrigger) Do(ctx context.Context, cmdLine [][]byte) handler.Reply {
 		return handler.NewErrReply(fmt.Sprintf("invalid cmd line: %v", cmdLine))
 	}
 
-	cmdType := CmdType(cmdLine[0])
+	// 将输入命令转换为小写以支持大写命令
+	cmdType := CmdType(strings.ToLower(string(cmdLine[0])))
 	if !d.executor.ValidCommand(cmdType) {
 		return handler.NewErrReply(fmt.Sprintf("unknown cmd '%s'", cmdLine[0]))
 	}

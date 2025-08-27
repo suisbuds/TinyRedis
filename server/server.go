@@ -104,7 +104,7 @@ func (s *Server) listenAndServe(listener net.Listener, closeChan chan struct{}) 
 		func() {
 			select {
 			case <-closeChan:
-				s.logger.Errorf("[server] server closing")
+				s.logger.Infof("[server] server closing")
 			case err := <-errChan:
 				s.logger.Errorf("[server] server error: %s", err.Error())
 			}

@@ -1,0 +1,92 @@
+# Go specific
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+go.work
+
+# Go workspace file
+go.work.sum
+
+# Go build and binary directories
+bin/
+dist/
+build/
+
+# Go module files
+go.sum
+
+# Redis specific
+*.aof
+*.rdb
+*.pid
+*.log
+dump.rdb
+appendonly.aof
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+logs/
+log/
+
+# Temporary files
+*.tmp
+*.temp
+temp/
+tmp/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Coverage reports
+coverage.txt
+coverage.out
+*.cover
+
+# Profiling data
+*.prof
+*.pprof
+
+# Air live reload
+tmp/
+
+# Dependency directories (uncomment if you want to ignore them)
+# vendor/
+
+# Binary files
+TinyRedis
+tinyredis
+.cursor/
+
+# Configuration files that might contain sensitive data
+# redis.conf
+# config.yaml
+# config.yml

@@ -79,7 +79,9 @@ func (h *Handler) handleStream(ctx context.Context, conn io.ReadWriter) {
 		// 从stream中读取数据包
 		case droplet := <-stream:
 			if err := h.handleDroplet(ctx, conn, droplet); err != nil {
-				h.logger.Errorf("[handler] connection terminated: %s", droplet.Err.Error())
+				if err != io.EOF {
+					h.logger.Errorf("[handler] connection terminated: %s", droplet.Err.Error())
+				}
 				return
 			}
 		}
