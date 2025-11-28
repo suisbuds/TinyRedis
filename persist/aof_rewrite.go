@@ -30,6 +30,7 @@ func (a *aofPersister) rewriteAOF() error {
 	return a.endRewrite(tmpFile, fileSize)
 }
 
+// 记录重写位置
 func (a *aofPersister) startRewrite() (*os.File, int64, error) {
 	a.mu.Lock()
 	defer a.mu.Unlock()
@@ -50,6 +51,7 @@ func (a *aofPersister) startRewrite() (*os.File, int64, error) {
 	return tmpFile, fileSize, nil
 }
 
+// 得到数据库快照 forkDB后，遍历 forkDB 并生成 aof 指令（aof持久化并发执行）
 func (a *aofPersister) doRewrite(tmpFile *os.File, fileSize int64) error {
 	forkedDB, err := a.forkDB(fileSize)
 	if err != nil {
@@ -71,6 +73,7 @@ func (a *aofPersister) doRewrite(tmpFile *os.File, fileSize int64) error {
 	return nil
 }
 
+// 读取并执行当前 AOF 文件，新建内存数据库的快照 (只fork一次)
 func (a *aofPersister) forkDB(fileSize int64) (database.DataStore, error) {
 	file, err := os.Open(a.aofFileName)
 	if err != nil {
@@ -93,6 +96,7 @@ func (a *aofPersister) forkDB(fileSize int64) (database.DataStore, error) {
 	return tmpKVStore, nil
 }
 
+// 复制增量数据到 aof 副本
 func (a *aofPersister) endRewrite(tmpFile *os.File, fileSize int64) error {
 	a.mu.Lock()
 	defer a.mu.Unlock()

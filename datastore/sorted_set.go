@@ -37,10 +37,10 @@ type SortedSet interface {
 
 type skiplist struct {
 	key           string
-	scoreToNode   map[int64]*skipnode
-	memberToScore map[string]int64
+	scoreToNode   map[int64]*skipnode // 按分值找节点，同分值可能有多个成员
+	memberToScore map[string]int64    // 记录每个成员对应的分值
 	head          *skipnode
-	rander        *rand.Rand
+	rander        *rand.Rand // 决定节点的层数
 }
 
 func newSkiplist(key string) SortedSet {
@@ -180,8 +180,8 @@ func (s *skiplist) ToCmd() [][]byte {
 
 type skipnode struct {
 	score   int64
-	members map[string]struct{}
-	nexts   []*skipnode
+	members map[string]struct{} // 同分值的所有成员
+	nexts   []*skipnode         // 不同高度的前进指针
 }
 
 func newSkipnode(score, height int64) *skipnode {

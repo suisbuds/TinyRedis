@@ -33,7 +33,7 @@ type List interface {
 	database.CmdAdapter
 }
 
-// 双端队列
+// 双端队列+环形buffer
 type listEntity struct {
 	key    string
 	buffer [][]byte
@@ -164,20 +164,20 @@ func (l *listEntity) get(idx int) []byte {
 	return l.buffer[i]
 }
 
-func (l *listEntity) Range(start, stop int64) [][]byte {
+func (l *listEntity) Range(start, end int64) [][]byte {
 	if l.size == 0 {
 		return nil
 	}
-	if stop == -1 {
-		stop = int64(l.size - 1)
+	if end == -1 {
+		end = int64(l.size - 1)
 	}
 	if start < 0 || start >= int64(l.size) {
 		return nil
 	}
-	if stop < 0 || stop >= int64(l.size) || stop < start {
+	if end < 0 || end >= int64(l.size) || end < start {
 		return nil
 	}
-	length := stop - start + 1
+	length := end - start + 1
 	res := make([][]byte, length)
 	for i := int64(0); i < length; i++ {
 		res[i] = l.get(int(start + i))

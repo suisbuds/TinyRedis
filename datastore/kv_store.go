@@ -12,12 +12,10 @@ import (
 )
 
 type KVStore struct {
-	data      map[string]interface{}
-	expiredAt map[string]time.Time
-
+	data            map[string]interface{}
+	expiredAt       map[string]time.Time
 	expireTimeWheel SortedSet
-
-	persister handler.Persister
+	persister       handler.Persister
 }
 
 func NewKVStore(persister handler.Persister) database.DataStore {
